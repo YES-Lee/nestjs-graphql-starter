@@ -8,8 +8,9 @@ import { UserDetailResult } from '../../graphql/schemas/user/user-detail.result'
 import { CurrentUser } from '../../decorators/current-user.decorator';
 import { UserListResult } from '../../graphql/schemas/user/list.result';
 import { UserListArgs } from '../../graphql/schemas/user/list.args';
+import { UserEntity } from '../../database/entities/user.entity';
 
-@Resolver('User')
+@Resolver(() => UserEntity)
 export class UserResolver {
   constructor(private userService: UserService) {}
 

@@ -48,6 +48,14 @@ type LoginResult {
   token: String
 }
 
+"""菜单"""
+type MenuEntity {
+  id: Float
+
+  """菜单名"""
+  name: String
+}
+
 type Mutation {
   """发送测试信息"""
   sendTestMessage(message: String): String
