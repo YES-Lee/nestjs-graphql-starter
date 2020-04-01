@@ -3,6 +3,28 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type A {
+  id: Int
+  name: String
+  bList: [B]
+  abList: [AB]
+}
+
+type AB {
+  id: Int
+  a_id: Int
+  b_id: Float
+  note: String
+  a: A
+  b: B
+}
+
+type B {
+  id: Int
+  name: String
+  abList: [AB]
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -82,6 +104,12 @@ type Query {
     """每页数量"""
     pageSize: Int = 10
   ): UserListResult
+  bById: B
+  abList: [AB]
+  abListByAId(a_id: Float): [AB]
+  abListByBId(b_id: Float): [AB]
+  aById: A
+  aList: [A]
 }
 
 type Subscription {

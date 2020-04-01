@@ -11,6 +11,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { ConfigModule } from './config/config.module';
 import * as pino from 'pino';
 import { ConfigService } from '@nestjs/config';
+import { AModule } from './modules/a/a.module';
 
 @Global()
 @Module({
@@ -36,6 +37,7 @@ import { ConfigService } from '@nestjs/config';
       },
     }),
     ConfigModule,
+    AModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver, ...appProviders],
