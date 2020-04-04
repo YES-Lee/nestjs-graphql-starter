@@ -1,6 +1,6 @@
 import { ObjectType, Field } from 'type-graphql';
 import { IPageResult } from '../support/page.result';
-import { UserDetailResult } from './user-detail.result';
+import { UserEntity } from '../../../database/entities/user.entity';
 
 @ObjectType({
   description: '用户列表',
@@ -9,7 +9,7 @@ import { UserDetailResult } from './user-detail.result';
    */
   implements: IPageResult,
 })
-export class UserListResult extends IPageResult<UserDetailResult> {
-  @Field(type => [UserDetailResult])
-  rows: UserDetailResult[];
+export class UserListResult extends IPageResult<UserEntity> {
+  @Field(type => [UserEntity])
+  rows: UserEntity[];
 }

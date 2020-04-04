@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from 'type-graphql';
 import { GenderEnum } from '../../enums/gender.enum';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { BaseEntity } from './base';
 
 @ObjectType({
   description: '用户信息',
@@ -8,10 +9,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity({
   name: 'test_user', // 表名
 })
-export class UserEntity {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id: number;
+export class UserEntity extends BaseEntity {
 
   @Field({ description: '用户名' })
   @Column()
@@ -27,16 +25,4 @@ export class UserEntity {
   @Field(type => GenderEnum, { description: '性别' })
   @Column()
   gender: GenderEnum;
-
-  @Field()
-  @Column({ type: 'datetime' })
-  created_at: Date;
-
-  @Field()
-  @Column({ type: 'datetime' })
-  updated_at: Date;
-
-  @Field()
-  @Column({ type: 'datetime' })
-  deleted_at: Date;
 }
