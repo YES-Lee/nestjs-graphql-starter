@@ -1,11 +1,13 @@
 import { Resolver, Query, Args, ResolveProperty, Parent } from '@nestjs/graphql';
 import { UserGroupEntity } from '../../database/entities/user-group.entity';
 import { UserGroupListResult } from '../../graphql/schemas/user-group/list.result';
-import { Inject } from '@nestjs/common';
+import { Inject, forwardRef } from '@nestjs/common';
 import { UserGroupService } from './user-group.service';
 import { GroupEntity } from '../../database/entities/group.entity';
 import { GroupResolver } from '../group/group.resolver';
 import { Int } from 'type-graphql';
+import { UserEntity } from '../../database/entities/user.entity';
+import { UserResolver } from '../user/user.resolver';
 
 @Resolver(UserGroupEntity)
 export class UserGroupResolver {
@@ -13,14 +15,16 @@ export class UserGroupResolver {
   @Inject(UserGroupService)
   private userGroupService: UserGroupService;
 
-  @Inject(GroupResolver)
+  @Inject(forwardRef(() => GroupResolver))
   private groupResolver: GroupResolver;
 
-  @Query(() => UserGroupListResult)
+  @Inject(forwardRef(() => UserResolver))
+  private userResolver: UserResolver;
+
   listByUserId(
-    @Args({ name: 'userId', type: () => Int }) userId: number,
-    @Args({ name: 'page', type: () => Int }) page: number,
-    @Args({ name: 'pageSize', type: () => Int }) pageSize: number
+    userId: number,
+    page: number,
+    pageSize: number
   ): Promise<UserGroupListResult> {
     return this.userGroupService.listByUserId(userId, page, pageSize);
   }
@@ -28,5 +32,14 @@ export class UserGroupResolver {
   @ResolveProperty(() => GroupEntity)
   group(@Parent() parent: UserGroupEntity): Promise<GroupEntity> {
     return this.groupResolver.groupById(parent.groupId);
+  }
+
+  @ResolveProperty(() => UserEntity)
+  user(@Parent() parent: UserGroupEntity): Promise<UserEntity> {
+    return this.userResolver.getById(parent.userId);
+  }
+
+  getById(id: number): Promise<UserGroupEntity> {
+    return this.userGroupService.getById(id);
   }
 }

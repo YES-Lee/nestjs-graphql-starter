@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args, Query, ResolveProperty, Parent } from '@nestjs/graphql';
 import { UserService } from './user.service';
-import { UseGuards, Inject } from '@nestjs/common';
+import { UseGuards, Inject, forwardRef } from '@nestjs/common';
 import { GqlAuthGuard } from '../auth/graphql.guard';
 import { LoginResult } from '../../graphql/schemas/user/login.result';
 import { LoginInput } from '../../graphql/schemas/user/login.input';
@@ -23,7 +23,7 @@ export class UserResolver {
   @Inject(UserService)
   private userService: UserService;
 
-  @Inject(UserGroupResolver)
+  @Inject(forwardRef(() => UserGroupResolver))
   private userGroupResolver: UserGroupResolver;
 
   @Inject(GroupResolver)
@@ -57,5 +57,9 @@ export class UserResolver {
     @Args({ name: 'pageSize', type: () => Int }) pageSize: number
     ): Promise<GroupListResult> {
     return this.groupResolver.listByUserId(user.id, page, pageSize);
+  }
+
+  getById(id: number): Promise<UserEntity> {
+    return this.userService.getById(id);
   }
 }

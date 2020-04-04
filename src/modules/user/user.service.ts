@@ -44,4 +44,8 @@ export class UserService {
       rows
     };
   }
+
+  getById(id: number): Promise<UserEntity> {
+    return this.userRepo.findOne(id);
+  }
 }

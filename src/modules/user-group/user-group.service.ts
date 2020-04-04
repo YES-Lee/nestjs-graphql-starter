@@ -22,4 +22,8 @@ export class UserGroupService {
     };
   }
 
+  getById(id: number): Promise<UserGroupEntity> {
+    return this.groupRepo.findOne(id);
+  }
+
 }
