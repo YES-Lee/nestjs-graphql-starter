@@ -1,4 +1,4 @@
-import { InputType, Field } from 'type-graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType({
   description: '登录账号'

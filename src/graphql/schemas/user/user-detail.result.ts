@@ -1,4 +1,4 @@
-import { ObjectType } from 'type-graphql';
+import { ObjectType } from '@nestjs/graphql';
 import { UserEntity } from '../../../database/entities/user.entity';
 
 @ObjectType({

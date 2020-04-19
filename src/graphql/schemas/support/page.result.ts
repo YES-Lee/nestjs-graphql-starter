@@ -1,4 +1,4 @@
-import { InterfaceType, Field, Int } from 'type-graphql';
+import { InterfaceType, Field, Int } from '@nestjs/graphql';
 
 @InterfaceType({
   description: '分页接口返回数据接口',

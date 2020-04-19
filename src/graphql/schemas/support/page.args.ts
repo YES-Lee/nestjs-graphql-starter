@@ -1,4 +1,4 @@
-import { Field, Int, ArgsType } from 'type-graphql';
+import { Field, Int, ArgsType } from '@nestjs/graphql';
 
 /**
  * 分页接口统一参数格式，所有分页接口子类继承

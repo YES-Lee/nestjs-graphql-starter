@@ -1,4 +1,4 @@
-import { ArgsType } from 'type-graphql';
+import { ArgsType } from '@nestjs/graphql';
 import { IPageArgs } from '../support/page.args';
 
 @ArgsType()

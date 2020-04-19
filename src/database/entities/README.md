@@ -11,7 +11,7 @@
 实例：
 
 ```typescript
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { GenderEnum } from '../../enums/gender.enum';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
