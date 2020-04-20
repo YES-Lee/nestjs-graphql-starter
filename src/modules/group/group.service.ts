@@ -4,6 +4,7 @@ import { GroupEntity } from '../../database/entities/group.entity';
 import { GROUP_REPOSITORY } from './group.providers';
 import { GroupListResult } from '../../graphql/schemas/group/list.result';
 import { UserGroupEntity } from '../../database/entities/user-group.entity';
+import { GroupListArgs } from '../../graphql/schemas/group/list.args';
 
 @Injectable()
 export class GroupService {
@@ -15,15 +16,25 @@ export class GroupService {
     return this.groupRepo.findOne(id);
   }
 
-  async listByUserId(userId: number, page = 1, pageSize = 10): Promise<GroupListResult> {
-    const [rows, count] = await this.groupRepo
-      .createQueryBuilder('group')
-      .innerJoin(UserGroupEntity, 'userGroup', 'userGroup.group_id = group.id')
-      .where('userGroup.user_id = :userId', { userId })
-      .limit(pageSize)
-      .offset(pageSize * (page - 1))
-      .distinct()
-      .getManyAndCount();
+  async listByUserId(userId: number, { page, pageSize, name }: GroupListArgs): Promise<GroupListResult> {
+    const query = this.groupRepo
+    .createQueryBuilder('group')
+    .innerJoin(
+      UserGroupEntity,
+      'userGroup',
+      'userGroup.group_id = group.id AND userGroup.user_id = :userId AND group.name LIKE :name',
+      {
+        userId,
+        name: `%${name}%`
+      }
+    )
+    .limit(pageSize)
+    .offset(pageSize * (page - 1));
+
+    const sql = query.getSql();
+    const params = query.getQueryAndParameters()
+
+    const [rows, count] = await query.getManyAndCount();
     return {
       count,
       rows

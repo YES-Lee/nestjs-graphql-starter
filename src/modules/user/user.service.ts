@@ -26,11 +26,12 @@ export class UserService {
     return this.userRepo.findOne(id);
   }
 
-  async getUserList(data: UserListArgs): Promise<UserListResult> {
+  async getUserList({ page, pageSize, username }: UserListArgs): Promise<UserListResult> {
     const [rows, count] = await this.userRepo
-      .createQueryBuilder()
-      .limit(data.pageSize)
-      .offset((data.page - 1) * data.pageSize)
+      .createQueryBuilder('user')
+      .where('user.username LIKE :username', { username: `%${username}%` })
+      .limit(pageSize)
+      .offset((page - 1) * pageSize)
       .getManyAndCount();
 
     return {

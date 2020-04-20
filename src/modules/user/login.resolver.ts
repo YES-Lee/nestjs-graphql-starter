@@ -4,23 +4,28 @@ import { Inject } from '@nestjs/common';
 import { LoginInput } from '../../graphql/schemas/user/login.input';
 import { UserEntity } from '../../database/entities/user.entity';
 import { AuthService } from '../auth/auth.service';
+import { UserResolver } from './user.resolver';
+import { LoginResult } from '../../graphql/schemas/user/login.result';
 
-@Resolver(() => UserEntity)
+@Resolver(() => LoginResult)
 export class UserLoginResolver {
 
   @Inject(UserService)
   private userService: UserService;
 
+  @Inject(UserResolver)
+  private userResolver: UserResolver;
+
   @Inject(AuthService)
   private authService: AuthService;
 
-  @Mutation(returns => UserEntity, { description: '用户登录' })
-  login(@Args('account') account: LoginInput): Promise<UserEntity> {
-    return this.userService.login(account);
-  }
-
-  @ResolveField(() => String)
-  token(@Parent() user: UserEntity) {
-    return this.authService.sign({...user});
+  @Mutation(returns => LoginResult, { description: '用户登录' })
+  async login(@Args('account') account: LoginInput): Promise<LoginResult> {
+    const loginUser = await this.userService.login(account);
+    const userInfo = await this.userResolver.getById(loginUser.id);
+    return {
+      token: this.authService.sign({...loginUser}),
+      userInfo
+    };
   }
 }

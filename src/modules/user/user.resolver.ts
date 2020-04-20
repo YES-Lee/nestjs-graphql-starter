@@ -11,6 +11,7 @@ import { UserGroupListResult } from '../../graphql/schemas/user-group/list.resul
 import { GroupListResult } from '../../graphql/schemas/group/list.result';
 import { GroupResolver } from '../group/group.resolver';
 import { Int } from '@nestjs/graphql';
+import { GroupListArgs } from '../../graphql/schemas/group/list.args';
 
 @Resolver(() => UserEntity)
 export class UserResolver {
@@ -47,10 +48,9 @@ export class UserResolver {
   @ResolveField(() => GroupListResult)
   groups(
     @Parent() user: UserEntity,
-    @Args({ name: 'page', type: () => Int }) page: number,
-    @Args({ name: 'pageSize', type: () => Int }) pageSize: number
+    @Args() groupListArgs: GroupListArgs
     ): Promise<GroupListResult> {
-    return this.groupResolver.listByUserId(user.id, page, pageSize);
+    return this.groupResolver.listByUserId(user.id, groupListArgs);
   }
 
   getById(id: number): Promise<UserEntity> {

@@ -27,8 +27,16 @@ type UserEntity {
   """性别"""
   gender: GenderEnum!
   userGroups(pageSize: Int!, page: Int!): UserGroupListResult!
-  groups(pageSize: Int!, page: Int!): GroupListResult!
-  token: String!
+  groups(
+    """页码"""
+    page: Int = 1
+
+    """每页数量"""
+    pageSize: Int = 10
+
+    """用户组名称"""
+    name: String = ""
+  ): GroupListResult!
 }
 
 """
@@ -95,6 +103,14 @@ type GroupListResult implements IPageResult {
   rows: [GroupEntity!]!
 }
 
+"""用户登录返回结果"""
+type LoginResult {
+  token: String!
+
+  """用户信息"""
+  userInfo: UserEntity!
+}
+
 type Query {
   """测试接口"""
   test: String!
@@ -113,6 +129,9 @@ type Query {
 
     """每页数量"""
     pageSize: Int = 10
+
+    """用户名"""
+    username: String = ""
   ): UserListResult!
 }
 
@@ -121,7 +140,7 @@ type Mutation {
   sendTestMessage(message: String!): String!
 
   """用户登录"""
-  login(account: LoginInput!): UserEntity!
+  login(account: LoginInput!): LoginResult!
 }
 
 """登录账号"""
