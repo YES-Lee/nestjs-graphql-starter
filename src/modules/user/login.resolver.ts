@@ -1,21 +1,26 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
 import { UserService } from './user.service';
-import { UseGuards } from '@nestjs/common';
-import { GqlAuthGuard } from '../auth/graphql.guard';
-import { LoginResult } from '../../graphql/schemas/user/login.result';
+import { Inject } from '@nestjs/common';
 import { LoginInput } from '../../graphql/schemas/user/login.input';
-import { UserDetailResult } from '../../graphql/schemas/user/user-detail.result';
-import { CurrentUser } from '../../decorators/current-user.decorator';
-import { UserListResult } from '../../graphql/schemas/user/list.result';
-import { UserListArgs } from '../../graphql/schemas/user/list.args';
 import { UserEntity } from '../../database/entities/user.entity';
+import { AuthService } from '../auth/auth.service';
 
-@Resolver(() => LoginResult)
+@Resolver(() => UserEntity)
 export class UserLoginResolver {
-  constructor(private userService: UserService) {}
 
-  @Mutation(returns => LoginResult, { description: '用户登录' })
-  login(@Args('account') account: LoginInput) {
+  @Inject(UserService)
+  private userService: UserService;
+
+  @Inject(AuthService)
+  private authService: AuthService;
+
+  @Mutation(returns => UserEntity, { description: '用户登录' })
+  login(@Args('account') account: LoginInput): Promise<UserEntity> {
     return this.userService.login(account);
+  }
+
+  @ResolveField(() => String)
+  token(@Parent() user: UserEntity) {
+    return this.authService.sign({...user});
   }
 }

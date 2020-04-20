@@ -11,7 +11,7 @@
 实例：
 
 ```typescript
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { GenderEnum } from '../../enums/gender.enum';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
@@ -58,4 +58,3 @@ export class UserEntity {
 ## 相关文档
 
 * typrorm [https://typeorm.io/](https://typeorm.io/)
-* type-graphql [https://typegraphql.ml/](https://typegraphql.ml/)

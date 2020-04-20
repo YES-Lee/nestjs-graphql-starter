@@ -1,4 +1,4 @@
-import { ObjectType, Field } from 'type-graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType({
   description: '系统信息',

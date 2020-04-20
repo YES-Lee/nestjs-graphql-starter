@@ -1,4 +1,4 @@
-import { ObjectType, Field } from 'type-graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 import { IPageResult } from '../support/page.result';
 import { UserGroupEntity } from '../../../database/entities/user-group.entity';
 

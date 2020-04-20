@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule as GqlModule } from '@nestjs/graphql';
-import { BuildSchemaOptions } from 'type-graphql';
+import { BuildSchemaOptions } from '@nestjs/graphql';
 import { ConfigService } from '@nestjs/config';
 
 const buildSchemaOptions: any = {

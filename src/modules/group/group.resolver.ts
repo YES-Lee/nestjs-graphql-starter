@@ -1,9 +1,9 @@
-import { Resolver, Query, Args, ResolveProperty, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Args, ResolveField, Parent } from '@nestjs/graphql';
 import { GroupEntity } from '../../database/entities/group.entity';
 import { Inject, forwardRef } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { GroupListResult } from '../../graphql/schemas/group/list.result';
-import { Int } from 'type-graphql';
+import { Int } from '@nestjs/graphql';
 import { UserGroupEntity } from '../../database/entities/user-group.entity';
 import { UserGroupResolver } from '../user-group/user-group.resolver';
 
@@ -27,7 +27,7 @@ export class GroupResolver {
     return this.groupService.listByUserId(userId, page, pageSize);
   }
 
-  @ResolveProperty(() => UserGroupEntity)
+  @ResolveField(() => UserGroupEntity)
   userGroup(@Parent() group: GroupEntity): Promise<UserGroupEntity> {
     return this.userGroupResolver.getById(group.id);
   }

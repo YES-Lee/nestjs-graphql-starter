@@ -1,5 +1,7 @@
 # Nestjs + graphql快速开发框架
 
+*测试数据库：`sql/test.sql`*
+
 集成了如下技术：
 
 * ORM：typeorm
@@ -92,5 +94,4 @@ src
 * 数据库ORM框架 [typeorm] [https://typeorm.io/](https://typeorm.io/)
 * 登录认证 [Passport.js] [http://www.passportjs.org/](http://www.passportjs.org/)
 * 数据接口 [GraphQl] [https://graphql.cn/](https://graphql.cn/)
-* GraphQl扩展 [type-graphql] [https://typegraphql.ml/](https://typegraphql.ml/)
 * WebSocket [socket.io] [https://socket.io](https://socket.io)

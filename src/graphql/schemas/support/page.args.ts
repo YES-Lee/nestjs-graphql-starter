@@ -1,10 +1,10 @@
-import { Field, Int, ArgsType } from 'type-graphql';
+import { Field, Int, ArgsType } from '@nestjs/graphql';
 
 /**
  * 分页接口统一参数格式，所有分页接口子类继承
  */
 @ArgsType()
-export class IPageArgs {
+export abstract class IPageArgs {
   @Field(type => Int, { description: '页码', defaultValue: 1 })
   page: number;
 

@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { GenderEnum } from '../../enums/gender.enum';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { BaseEntity } from './base';
@@ -19,7 +19,7 @@ export class UserGroupEntity extends BaseEntity {
   @Column({ name: 'group_id' })
   groupId: number;
 
-  @Field({ description: '备注' })
+  @Field({ description: '备注', nullable: true })
   @Column()
   remark: string;
 }

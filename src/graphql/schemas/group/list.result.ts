@@ -1,5 +1,5 @@
 import { IPageResult } from '../support/page.result';
-import { ObjectType, Field } from 'type-graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 import { GroupEntity } from '../../../database/entities/group.entity';
 
 @ObjectType({

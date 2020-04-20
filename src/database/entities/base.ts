@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from 'type-graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
