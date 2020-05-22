@@ -26,7 +26,7 @@ type UserEntity {
 
   """性别"""
   gender: GenderEnum!
-  userGroups(pageSize: Int!, page: Int!): UserGroupListResult!
+  userGroups(groupId: Int, pageSize: Int = 10, page: Int = 1): UserGroupListResult!
   groups(
     """页码"""
     page: Int = 1
@@ -88,7 +88,7 @@ type GroupEntity {
 
   """备注"""
   remark: String
-  userGroup: UserGroupEntity!
+  userGroups(userId: Int, pageSize: Int = 10, page: Int = 1): UserGroupListResult!
 }
 
 """用户-用户组关系表列表"""

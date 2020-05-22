@@ -23,9 +23,10 @@ export class UserGroupResolver {
   listByUserId(
     userId: number,
     page: number,
-    pageSize: number
+    pageSize: number,
+    groupId?: number
   ): Promise<UserGroupListResult> {
-    return this.userGroupService.listByUserId(userId, page, pageSize);
+    return this.userGroupService.listByUserId(userId, page, pageSize, groupId);
   }
 
   @ResolveField(() => GroupEntity)
@@ -38,7 +39,7 @@ export class UserGroupResolver {
     return this.userResolver.getById(parent.userId);
   }
 
-  getById(id: number): Promise<UserGroupEntity> {
-    return this.userGroupService.getById(id);
+  listByGroupId(groupId: number, page: number, pageSize: number, userId?: number): Promise<UserGroupListResult> {
+    return this.userGroupService.listByGroupId(groupId, page, pageSize, userId);
   }
 }
